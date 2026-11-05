@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 const mongoose = require('mongoose');
 
 async function insertOne() {
@@ -109,8 +109,8 @@ async function main() {
     try {
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to MongoDB Atlas!');
-        await insertOne();
-        await insertMany();
+        //await insertOne();
+        //await insertMany();
         await findAll();
         await findFemalesOver30();
         await countDocuments();
