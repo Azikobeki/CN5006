@@ -108,6 +108,7 @@ app.post('/submit-data', (req, res) => {
 const mongoose = require('mongoose');
 const {
     insertOne,
+    insertMany,
     findAll,
     countDocuments,
     findFemalesOver30,
@@ -145,6 +146,16 @@ app.post('/insertOne', async (req, res) => {
 
     }
 });
+
+app.post('/insertMany', async (req, res) => {
+    try {
+        const result = await insertMany();
+        res.json({ status: true, message: 'People inserted successfully', data: result});
+    } catch (error) {
+        res.status(500).json({ status: false, message: error.message });
+    }
+});
+
 app.get('/Showform', (req, res) => {
 
     res.sendFile('Personform.html', {
@@ -164,6 +175,41 @@ app.get('/persons', async (req, res) => {
    
 });
 
+app.get('/findFemalesOver30', async (req, res) => {
+    try {
+        const result = await findFemalesOver30();
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+app.get('/countDocuments', async (req, res) => {
+    try {
+        const count = await countDocuments();
+        res.json(count);
+    } catch (err) {
+        res.status(500).json({ message: err.message});
+    }
+});
+
+app.get('/updateManyPersons', async (req, res) => {
+    try {
+        const result = await updateManyPersons();
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ message: err.message});
+    }
+});
+
+app.get('/deleteManyPersons', async (req, res) => {
+    try {
+        const result = await deleteManyPersons();
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

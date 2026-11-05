@@ -17,16 +17,21 @@ async function insertOne() {
 
 async function insertMany() {
     const manyPersons = [
-        { name: 'SimonNHQ', age: 42, gender: 'Male', salary: 3456 },
-        { name: 'NeeshaNN', age: 53, gender: 'Female', salary: 1000 },
-        { name: 'MaryNHQ', age: 27, gender: 'Female', salary: 5402 },
-        { name: 'MikeNJQ', age: 40, gender: 'Male', salary: 4519 }
+        { name: 'SimonNHQ', age: 42, gender: 'Male', salary: 3456, city: 'London'},
+        { name: 'NeeshaNN', age: 53, gender: 'Female', salary: 1000, city: 'Kent' },
+        { name: 'MaryNHQ', age: 27, gender: 'Female', salary: 5402, city: 'Surrey'},
+        { name: 'MikeNJQ', age: 40, gender: 'Male', salary: 4519, city: 'Bristol' }
     ];
 
     const result = await Person.insertMany(manyPersons);
 
     console.log('Many documents inserted');
     console.log(result);
+}
+
+async function findPeopleByCity() {
+    const docs = await Person.find({ city: 'London' });
+    console.log('People from London:', docs);
 }
 
 async function findAll() {
@@ -90,7 +95,8 @@ const PersonSchema = new mongoose.Schema({
     },
     age: Number,
     gender: String,
-    salary: Number
+    salary: Number,
+    city: String
 });
 
 const Person = mongoose.model(
@@ -108,8 +114,9 @@ async function main() {
         await findAll();
         await findFemalesOver30();
         await countDocuments();
-        await deleteManyPersons();
+        // await deleteManyPersons();
         await updateManyPersons();
+        await findPeopleByCity();
     } catch (err) {
         console.error('Connection error:', err.message);
     } finally {

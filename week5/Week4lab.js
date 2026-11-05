@@ -46,6 +46,7 @@ async function insertMany() {
 
     console.log('Many documents inserted');
     console.log(result);
+    return result;
 }
 
 // Find all documents
@@ -104,6 +105,7 @@ async function deleteManyPersons() {
     });
 
     console.log("Deleted documents:", result);
+    return result;
 }
 // Update all females' salary to 5555
 async function updateManyPersons() {
